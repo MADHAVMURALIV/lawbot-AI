@@ -1,0 +1,201 @@
+/* ===== General Styles ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #0f0f1a, #1a0029);
+  color: #f1eaff;
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Glowing background blobs */
+body::before,
+body::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.5;
+  z-index: -1;
+}
+
+body::before {
+  width: 400px;
+  height: 400px;
+  top: -100px;
+  left: -150px;
+  background: radial-gradient(circle, #b347ff, transparent 70%);
+}
+
+body::after {
+  width: 500px;
+  height: 500px;
+  bottom: -150px;
+  right: -200px;
+  background: radial-gradient(circle, #ff00cc, transparent 70%);
+}
+
+/* ===== Header ===== */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.auth-links a {
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 8px 16px;
+  border-radius: 25px;
+  margin-left: 10px;
+  transition: 0.3s;
+}
+
+.log-in-link {
+  border: 1px solid #b347ff;
+  color: #b347ff;
+}
+
+.log-in-link:hover {
+  background-color: #b347ff;
+  color: #fff;
+}
+
+.sign-up-link {
+  background: linear-gradient(90deg, #b347ff, #ff00cc);
+  color: #fff;
+}
+
+.sign-up-link:hover {
+  box-shadow: 0 0 15px rgba(255, 0, 204, 0.5);
+  transform: scale(1.05);
+}
+
+/* ===== Hero Section ===== */
+.hero-section {
+  text-align: center;
+  padding: 120px 20px 80px;
+}
+
+.hero-section h1 {
+  font-size: 3.5rem;
+  margin-bottom: 15px;
+}
+
+.hero-section h1 span {
+  background: linear-gradient(90deg, #b347ff, #ff00cc);
+  background-clip: text;                 /* Standard */
+  -webkit-background-clip: text;         /* Chrome/Safari */
+  color: transparent;                    /* Fallback */
+  -webkit-text-fill-color: transparent;  /* Required for WebKit */
+}
+
+.hero-section .tagline {
+  color: #c8a6ff;
+  font-size: 1.3rem;
+  margin-bottom: 30px;
+}
+
+.cta-primary {
+  display: inline-block;
+  background: linear-gradient(90deg, #b347ff, #ff00cc);
+  padding: 12px 28px;
+  border-radius: 30px;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.cta-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 0, 204, 0.5);
+}
+
+/* ===== Info Section ===== */
+.info-section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.info-text {
+  max-width: 700px;
+  margin: 0 auto;
+  color: #ddd;
+}
+
+/* ===== Samples Section ===== */
+.samples-section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.samples-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  color: #fff;
+}
+
+.samples-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.sample-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 25px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  color: #eee;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.3s;
+}
+
+.sample-item:hover {
+  background: rgba(255, 0, 204, 0.15);
+  transform: translateY(-5px);
+}
+
+/* ===== Legal Focus Section ===== */
+.legal-focus-section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.legal-focus-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.legal-text {
+  max-width: 700px;
+  margin: 0 auto;
+  color: #ccc;
+}
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  padding: 40px 20px;
+  color: #aaa;
+  font-size: 0.85rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}

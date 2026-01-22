@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LawBot AI - Dashboard</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+
+    <style>
+        /* CSS based on the provided dark-mode, dashboard-style image */
+        :root {
+            --dark-bg: #1A1A2E; /* Main deep purple/dark background */
+            --dark-sidebar: #24243A; /* Slightly lighter dark for sidebar */
+            --dark-card: #2E2E4A; /* Card background color */
+            --primary-text: #FFFFFF; /* White text */
+            --secondary-text: #B0B0C4; /* Light grey text for details */
+            --accent-pink: #FF69B4; /* Pink accent color */
+            --accent-purple: #8A2BE2; /* Purple accent color */
+            --header-gradient: linear-gradient(90deg, #8A2BE2, #FF69B4); /* Gradient for buttons/banner */
+            --border-radius-lg: 12px;
+            --border-radius-sm: 8px;
+            --font-family: 'Outfit', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--dark-bg);
+            color: var(--primary-text);
+            min-height: 100vh;
+            padding-top: 70px; /* Space for fixed header */
+        }
+
+        /* --- Header (Fixed Top Bar) --- */
+        .header-top {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--dark-sidebar);
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-section h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-text);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-section i {
+            font-size: 2rem;
+            color: var(--accent-pink);
+            margin-right: 5px;
+        }
+
+        .user-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-controls span, .user-controls a {
+            color: var(--secondary-text);
+            margin-right: 20px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .user-controls span:hover, .user-controls a:hover {
+            color: var(--primary-text);
+        }
+
+        .btn-header {
+            background: var(--header-gradient);
+            color: var(--primary-text);
+            border: none;
+            padding: 8px 18px;
+            border-radius: var(--border-radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .btn-header:hover {
+            opacity: 0.9;
+        }
+        
+        /* --- Main Layout Container --- */
+        .dashboard-layout {
+            display: flex;
+            padding: 30px;
+            gap: 25px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* --- Left Sidebar --- */
+        .left-sidebar {
+            width: 250px;
+            flex-shrink: 0;
+            background-color: var(--dark-card);
+            padding: 20px 0;
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .sidebar-section {
+            margin-bottom: 25px;
+        }
+
+        .sidebar-section h3 {
+            color: var(--secondary-text);
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            padding: 0 20px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 10px;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--secondary-text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: background-color 0.2s, color 0.2s;
+            cursor: pointer;
+        }
+
+        .sidebar-item i {
+            font-size: 1.3rem;
+            margin-right: 15px;
+            color: var(--accent-purple);
+        }
+
+        .sidebar-item:hover, .sidebar-item.active {
+            background-color: var(--dark-bg);
+            color: var(--primary-text);
+        }
+        
+        .sidebar-item.active i {
+             color: var(--accent-pink);
+        }
+
+        .sidebar-badge {
+            margin-left: auto;
+            color: var(--secondary-text);
+            font-size: 0.8rem;
+        }
+
+        /* --- Main Content Area --- */
+        .main-content-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* --- Highlight/Banner Card --- */
+        .highlight-card {
+            background: #2E2E4A; /* Fallback */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" preserveAspectRatio="none"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%238A2BE2;stop-opacity:1" /><stop offset="100%" style="stop-color:%23FF69B4;stop-opacity:1" /></linearGradient></defs><rect width="100" height="100" fill="url(%23g)" /></svg>'); /* Placeholder gradient fill */
+            background-size: cover;
+            background-position: center;
+            border-radius: var(--border-radius-lg);
+            padding: 40px;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-card h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .highlight-card p {
+            font-size: 1rem;
+            color: var(--secondary-text);
+            max-width: 60%;
+            margin-bottom: 20px;
+        }
+
+        .highlight-card .btn-light {
+            background-color: var(--primary-text);
+            color: var(--accent-purple);
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        /* --- Feature Grid --- */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background-color: var(--dark-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius-lg);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-header i {
+            font-size: 1.8rem;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: var(--accent-pink); /* Default icon color */
+            margin-right: 10px;
+        }
+
+        .card-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .card-header span {
+            margin-left: auto;
+            color: var(--secondary-text);
+            font-size: 0.8rem;
+        }
+        
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--secondary-text);
+            margin-bottom: 5px;
+        }
+
+        /* Styling for icons used in the original HTML data (repurposed) */
+        .card-icon-i {
+            color: #4ADBC8 !important; /* Blue-green tint */
+        }
+        .card-icon-b {
+            color: #FFC0CB !important; /* Pink tint */
+        }
+
+        /* --- Right Sidebar (Activity/Profile) --- */
+        .right-sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .activity-card {
+            background-color: var(--dark-card);
+            padding: 20px;
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .activity-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .activity-item img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            background-color: var(--accent-purple);
+            border: 2px solid var(--accent-pink);
+        }
+        
+        .activity-item-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .activity-item-details span {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .activity-item-details p {
+            font-size: 0.8rem;
+            color: var(--secondary-text);
+        }
+
+        .activity-item .time {
+            margin-left: auto;
+            color: var(--secondary-text);
+            font-size: 0.8rem;
+        }
+
+        .activity-card .btn-footer {
+            background: var(--dark-bg);
+            color: var(--accent-pink);
+            border: 1px solid var(--accent-pink);
+            padding: 8px 15px;
+            width: 100%;
+            border-radius: var(--border-radius-sm);
+            margin-top: 10px;
+            font-weight: 500;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.2s;
+        }
+
+        .activity-card .btn-footer:hover {
+            background-color: rgba(250, 248, 249, 0.1);
+        }
+
+        /* --- Modal and Profile (Minimal styling for visibility) --- */
+        .modal {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .modal-content {
+            background-color: var(--dark-sidebar);
+            color: var(--primary-text);
+        }
+        .modal-content h2 {
+            color: var(--accent-pink);
+        }
+        .modal-close {
+            color: var(--secondary-text);
+        }
+        
+        #profile-btn {
+            display: none; /* Hide floating button on dashboard view */
+        }
+
+        /* Media Queries for responsiveness */
+        @media (max-width: 1200px) {
+            .dashboard-layout {
+                flex-direction: column;
+            }
+            .left-sidebar, .right-sidebar {
+                width: 100%;
+                max-width: none;
+            }
+            .highlight-card p {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                padding: 0 15px;
+            }
+            .user-controls span, .user-controls a:not(.btn-header) {
+                display: none;
+            }
+            .dashboard-layout {
+                padding: 15px;
+            }
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar Dropdown */
+.sidebar-dropdown { width: 100%; }
+
+.dropdown-toggle {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dropdown-arrow {
+    margin-left: auto;
+    font-size: 1.2rem;
+    transition: transform 0.2s;
+    color: var(--secondary-text);
+}
+
+/* Hidden by default */
+.dropdown-content {
+    display: none;
+    flex-direction: column;
+    padding-left: 20px;
+    border-left: 1px solid rgba(255,255,255,0.1);
+    margin-left: 20px;
+}
+
+.dropdown-item {
+    padding: 6px 0;
+    font-size: 0.85rem;
+    color: var(--secondary-text);
+    text-decoration: none;
+}
+
+.dropdown-item:hover {
+    color: var(--primary-text);
+}
+
+.dropdown-open .dropdown-content {
+    display: flex;
+}
+
+.dropdown-open .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.social-icons a{font-size:1.5rem;color:#b347ff;margin-right:1rem;transition:.3s}
+.social-icons a:hover{color:#ff00cc}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);text-align:center;margin-top:2rem;padding-top:1rem;color:#888}
+
+
+    </style>
+</head>
+<body>
+
+    <header class="header-top">
+        <div class="logo-section">
+            <i class='bx bxs-institution'></i>
+            <h1>LawBot AI</h1>
+        </div>
+        <div class="user-controls">
+            <span>Narbara</span>
+            <a href = "https://www.youtube.com/watch?v=iG7_h8K-1Wg">Live news</a>
+            <a href="https://www.youtube.com/@SupremeCourtofIndia-1950">Supreme Court </a>
+            <a href="#">Profile Settings</a>
+            <a href="signin.html" class="btn-header">Log Out</a>
+        </div>
+    </header>
+
+    <div class="dashboard-layout">
+
+        <aside class="left-sidebar">
+    <div class="sidebar-section">
+        <h3>DASHBOARD</h3>
+        <a href="#" class="sidebar-item active">
+            <i class='bx bx-home-alt'></i> Home
+        </a>
+    </div>
+
+    <div class="sidebar-section">
+        <h3>Navigation</h3>
+
+        <a href="chat.html" class="sidebar-item">
+            <i class='bx bx-message-square-detail'></i> Quick AI Support
+        </a>
+
+        <a href="https://lawmin.gov.in/" target="_blank" rel="noopener" class="sidebar-item">
+            <i class='bx bx-book-open'></i> Law Awareness
+        </a>
+
+        <a href="https://www.livelaw.in/top-stories" target="_blank" rel="noopener" class="sidebar-item">
+            <i class='bx bx-news'></i> Law Updates
+        </a>
+
+        <a href="https://www.google.com/maps/search/lawyers+near+me/" target="_blank" rel="noopener" class="sidebar-item">
+            <i class='bx bx-user-voice'></i> Find a Lawyer
+        </a>
+
+        <!-- FIXED: Case Tracker was not closed before -->
+        <a href="#" class="sidebar-item">
+            <i class='bx bx-search-alt'></i> Case Tracker
+        </a>
+
+        <!-- FIXED: File Complaint dropdown moved outside the <a> -->
+        <div class="sidebar-dropdown">
+            <div class="sidebar-item dropdown-toggle">
+                <i class='bx bx-edit'></i> Emergency Contacts
+                <i class='bx bx-chevron-down dropdown-arrow'></i>
+            </div>
+
+            <div class="dropdown-content">
+
+                <a class="dropdown-item">NATIONAL EMERGENCY NUMBER — 112</a>
+                <a class="dropdown-item">POLICE — 100</a>
+                <a class="dropdown-item">FIRE — 101</a>
+                <a class="dropdown-item">AMBULANCE — 102</a>
+                <a class="dropdown-item">Disaster Management Services — 108</a>
+                <a class="dropdown-item">Women Helpline — 1091</a>
+                <a class="dropdown-item">Women Helpline (Domestic Abuse) — 181</a>
+                <a class="dropdown-item">Air Ambulance — 9540161344</a>
+                <a class="dropdown-item">Aids Helpline — 1097</a>
+                <a class="dropdown-item">Anti Poison New Delhi — 1066 / 011-1066</a>
+                <a class="dropdown-item">Disaster Mgmt N.D.M.A — 011-26701728 – 1078</a>
+                <a class="dropdown-item">NDRF Disaster — 011-24363260</a>
+                <a class="dropdown-item">Missing Child/Women — 1094</a>
+                <a class="dropdown-item">Railway Enquiry — 139</a>
+                <a class="dropdown-item">Senior Citizen Helpline — 1091 / 1291</a>
+                <a class="dropdown-item">Medical Helpline (108 Zones)</a>
+                <a class="dropdown-item">Railway Accident — 1072</a>
+                <a class="dropdown-item">Road Accident — 1073</a>
+                <a class="dropdown-item">Highway Accident — 1033</a>
+                <a class="dropdown-item">AIIMS ORBO Organ Donation — 1060</a>
+                <a class="dropdown-item">Call Centre — 1551</a>
+                <a class="dropdown-item">Relief Commissioner — 1070</a>
+                <a class="dropdown-item">Child Helpline — 1098</a>
+                <a class="dropdown-item">CVC — 1964</a>
+                <a class="dropdown-item">Tourist Helpline — 1363</a>
+                <a class="dropdown-item">LPG Leak — 1906</a>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar-section">
+        <h3>Stats</h3>
+        <div class="sidebar-item">
+            <i class='bx bx-error-alt'></i> Alerts Pending
+            <span class="sidebar-badge">05</span>
+        </div>
+        <div class="sidebar-item">
+            <i class='bx bx-group'></i> Recent Follows
+            <span class="sidebar-badge">40</span>
+        </div>
+    </div>
+</aside>
+
+        <main class="main-content-area">
+
+            <div class="highlight-card">
+                <h2>Find Your Legal Community</h2>
+                <p>Discuss cases, share knowledge, and connect with peers and professionals in a safe, curated legal environment.</p>
+                <a href="#" class="btn-light">Learn More</a>
+                </div>
+
+            <h2>Feature Card</h2>
+            <section class="feature-grid">
+                <a class="feature-card" href="#" id="emergency-contacts-card">
+                    <div class="card-header">
+                        <i class='bx bx-comment-error card-icon-i'></i>
+
+                        <h3>Register Complaint</h3>
+                        <span>20:36</span>
+                    </div>
+                    <p>Quick access to Police, Fire, and Legal aid numbers.</p>
+                    <p style="font-size: 0.8rem; color: var(--accent-pink);">Instant help available</p>
+                </a>
+
+                <a class="feature-card" href="https://www.leadindia.law/free-legal-advice" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <i class='bx bx-question-mark card-icon-b'></i>
+                        <h3>Legal FAQs</h3>
+                        <span>20:36</span>
+                    </div>
+                    <p>Browse answers to common legal questions & scenarios.</p>
+                    <p style="font-size: 0.8rem; color: var(--secondary-text);">Explore expert-written articles.</p>
+                </a>
+
+                <a class="feature-card" href="https://www.google.com/maps" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <i class='bx bx-map card-icon-i'></i>
+                        <h3>Live Location</h3>
+                        <span>20:36</span>
+                    </div>
+                    <p>Securely view and share your current precise location.</p>
+                    <p style="font-size: 0.8rem; color: var(--secondary-text);">Check nearest police stations.</p>
+                </a>
+            </section>
+
+            <h2>Popular Now</h2>
+            <section class="feature-grid">
+                <a class="feature-card" href="https://consumerhelpline.gov.in/public/" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <i class='bx bx-support card-icon-b'></i>
+                        <h3>Consumer Helpline</h3>
+                        <span>20:36</span>
+                    </div>
+                    <p>Submit and track consumer complaints quickly.</p>
+                    <p style="font-size: 0.8rem; color: var(--secondary-text);">High volume portal activity.</p>
+                </a>
+
+                <a class="feature-card" href="https://blog.ipleaders.in/" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <i class='bx bx-file card-icon-i'></i>
+                        <h3>Legal Articles</h3>
+                        <span>20:36</span>
+                    </div>
+                    <p>Deep dives into current legal topics and precedents.</p>
+                    <p style="font-size: 0.8rem; color: var(--secondary-text);">Recently updated content.</p>
+                </a>
+
+                <a class="feature-card" href="https://lawmin.gov.in/" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <i class='bx bx-book card-icon-b'></i>
+                        <h3>Law Awareness</h3>
+                        <span>20:36</span>
+                    </div>
+                    <p>Know your legal rights and duties from official sources.</p>
+                    <p style="font-size: 0.8rem; color: var(--secondary-text);">Essential reading for all users.</p>
+                </a>
+            </section>
+        </main>
+
+
+
+<!-- right side bars ---------------------------------------------------------------------->
+        <aside class="right-sidebar">
+            <div class="activity-card">
+                <h3>Mentions / Activity</h3>
+                <div class="activity-item">
+                    <img src="https://via.placeholder.com/40" alt="User Avatar 1"/>
+                    <div class="activity-item-details">
+                        <span>User Legalname A</span>
+                        <p>Discussed 'Contract Law'</p>
+                    </div>
+                    <span class="time">1d</span>
+                </div>
+                <div class="activity-item">
+                    <img src="https://via.placeholder.com/40" alt="User Avatar 2"/>
+                    <div class="activity-item-details">
+                        <span>Fidese Satsee</span>
+                        <p>Filed new complaint</p>
+                    </div>
+                    <span class="time">10s</span>
+                </div>
+                <div class="activity-item">
+                    <img src="https://via.placeholder.com/40" alt="User Avatar 3"/>
+                    <div class="activity-item-details">
+                        <span>Eladon Dedere</span>
+                        <p>Requested lawyer contact</p>
+                    </div>
+                    <span class="time">10x</span>
+                </div>
+
+                <a href="#" class="btn-footer">Show Hand</a>
+            </div>
+            
+             <div class="activity-card">
+                <h3>Online Lawyers</h3>
+                <div class="activity-item">
+                    <img src="https://via.placeholder.com/40/8A2BE2/FFFFFF?text=L" alt="Lawyer Avatar 4"/>
+                    <div class="activity-item-details">
+                        <span>Lawyer Jane Doe</span>
+                        <p>Specializes in Family Law</p>
+                    </div>
+                    <span class="time" style="color: var(--accent-pink);">Online</span>
+                </div>
+                <div class="activity-item">
+                    <img src="https://via.placeholder.com/40/FF69B4/FFFFFF?text=J" alt="Lawyer Avatar 5"/>
+                    <div class="activity-item-details">
+                        <span>Justice John Smith</span>
+                        <p>Specializes in Cyber Crime</p>
+                    </div>
+                    <span class="time" style="color: var(--accent-pink);">Online</span>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+
+    <!--emergeency contact drop script below-->
+<script>
+document.querySelector(".dropdown-toggle").addEventListener("click", function () {
+    this.parentElement.classList.toggle("dropdown-open");
+});
+</script>
+
+    
+
+<!--extras ,copyright below ''-->
+
+<div class="footer-column social-column">
+        <h4>Follow Us</h4>
+        <div class="social-icons">
+          <a href="#"><i class='bx bxl-facebook'></i></a>
+          <a href="#"><i class='bx bxl-twitter'></i></a>
+          <a href="#"><i class='bx bxl-instagram'></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>By continuing past this page, you agree to our Terms of Service, Cookie Policy, Privacy Policy and Content Policies.</p>
+      <p><strong>Developers:</strong> Madhav Murali V, Nandan Krishna, Akhil Shaju, Akshay AC</p>
+      <p>© 2025 LawBot AI. All rights reserved.</p>
+    </div>
+
+
+    
+</body>
+</html>

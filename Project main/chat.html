@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LawBot AI – Chat</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="chat.css" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- Profile Avatar + Dropdown -->
+  <button id="profile-btn"></button>
+  <div id="profile-menu">
+    <ul>
+      <li id="signout-option">Sign Out</li>
+    </ul>
+  </div>
+
+  <!-- ===== MAIN CHAT SCREEN ===== -->
+  <div class="chat-screen">
+    <h2>How can I help you today?</h2>
+
+    <!-- Chat Messages -->
+    <div id="chat-box"></div>
+
+    <!-- Input Bar -->
+    <!-- Input Bar -->
+<form id="prompt-form" autocomplete="off" class="center-input">
+  <!-- Attach File -->
+  <button type="button" class="icon-button" title="Attach file">
+    <i class='bx bx-paperclip'></i>
+  </button>
+
+  <!-- Text Input -->
+  <input type="text" id="prompt-input" placeholder="Ask anything..." required />
+
+  <!-- Mic -->
+  <button type="button" class="icon-button" title="Record voice">
+    <i class='bx bx-microphone'></i>
+  </button>
+
+  <!-- Camera -->
+  <button type="button" class="icon-button" title="Open camera">
+    <i class='bx bx-camera'></i>
+  </button>
+
+  <!-- Send -->
+  <button type="submit" id="send-button"><i class='bx bx-send'></i></button>
+</form>
+
+
+  <!-- Chat Logic -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("prompt-form");
+      const input = document.getElementById("prompt-input");
+      const chatBox = document.getElementById("chat-box");
+
+      function appendMessage(sender, text) {
+        const msg = document.createElement("div");
+        msg.className = sender === "user" ? "user-msg" : "bot-msg";
+        msg.innerText = text;
+        chatBox.appendChild(msg);
+        chatBox.scrollTop = chatBox.scrollHeight; // auto scroll
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const userMsg = input.value.trim();
+        if (!userMsg) return;
+
+        // Show user message
+        appendMessage("user", userMsg);
+        input.value = "";
+
+        try {
+          const res = await fetch("http://127.0.0.1:5000/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: userMsg }),
+          });
+
+          const data = await res.json();
+          if (data.reply) {
+            appendMessage("bot", data.reply);
+          } else {
+            appendMessage("bot", "⚠️ Error: " + (data.error || "No reply"));
+          }
+        } catch (err) {
+          appendMessage("bot", "⚠️ Failed to reach server.");
+          console.error(err);
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

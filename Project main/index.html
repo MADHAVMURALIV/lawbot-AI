@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LawBot AI</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <h1>⚖️ LawBot AI</h1>
+    <p>Your Legal Assistant & Emergency Companion</p>
+  </header>
+
+  <!-- ===== NAV ===== -->
+  <nav>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Awareness</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><button class="btn">Get Help</button></li>
+    </ul>
+  </nav>
+
+  <!-- ===== FEATURE CARDS ===== -->
+  <main class="features">
+    <a class="feature" href="#" id="emergency-contacts">
+      <i class='bx bx-phone-call'></i>
+      <h3>Emergency Contacts</h3>
+      <p>Quick access to essential emergency numbers.</p>
+    </a>
+
+    <div id="contacts-list" class="contacts-list" style="display:none;"></div>
+
+    <a class="feature" href="https://www.livelaw.in/top-stories" target="_blank" rel="noopener">
+      <i class='bx bx-news'></i><h3>Law Updates</h3><p>Stay informed with simplified law updates.</p>
+    </a>
+
+    <a class="feature" href="chat.html" id="quick-support">
+      <i class='bx bx-headphone'></i><h3>Quick Support</h3><p>Chat with our AI for instant legal help.</p>
+    </a>
+
+    <a class="feature" href="https://www.google.com/maps" target="_blank" rel="noopener">
+      <i class='bx bx-map'></i><h3>Live Location</h3><p>View your current location in map.</p>
+    </a>
+
+    <a class="feature" href="#" id="emergency-alert">
+      <i class='bx bx-bell'></i><h3>Emergency Alert</h3><p>Send instant alerts to nearby authorities.</p>
+    </a>
+
+    <a class="feature" href="https://www.google.com/maps/search/lawyers+near+me/" target="_blank" rel="noopener">
+      <i class='bx bx-user-voice'></i><h3>Find a Lawyer</h3><p>Get connected to verified legal professionals.</p>
+    </a>
+
+    <a class="feature" href="https://consumerhelpline.gov.in/public/" target="_blank" rel="noopener">
+      <i class='bx bx-support'></i><h3>Consumer Helpline</h3><p>Submit complaints and track consumer disputes.</p>
+    </a>
+
+    <a class="feature" href="https://lawmin.gov.in/" target="_blank" rel="noopener">
+      <i class='bx bx-book'></i><h3>Law Awareness</h3><p>Know your rights and duties.</p>
+    </a>
+
+    <a class="feature" href="https://blog.ipleaders.in/" target="_blank" rel="noopener">
+      <i class='bx bx-file'></i><h3>Legal Articles</h3><p>Explore expert-written articles.</p>
+    </a>
+
+    <a class="feature" href="https://www.leadindia.law/free-legal-advice" target="_blank" rel="noopener">
+      <i class='bx bx-question-mark'></i><h3>Legal FAQs</h3><p>Browse answers to common questions.</p>
+    </a>
+
+    <a class="feature" href="#" id="case-tracker">
+      <i class='bx bx-search-alt'></i><h3>Case Tracker</h3><p>Track the status of your cases.</p>
+    </a>
+
+    <a class="feature" href="javascript:void(0)" id="file-complaint">
+      <i class='bx bx-edit'></i>
+      <h3>File a Complaint</h3>
+      <p>Submit and manage your complaints online.</p>
+    </a>
+  </main>
+
+  <!-- ===== CTA ===== -->
+  <section class="cta">
+    <h2>Need Legal Support?</h2>
+    <p>Connect with verified lawyers and track your complaints online.</p>
+    <a class="btn" href="https://consumerhelpline.gov.in/public/" target="_blank" rel="noopener">File a Complaint</a>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-column">
+        <h4>About LawBot AI</h4>
+        <p>Your trusted legal assistant and emergency companion.</p>
+      </div>
+      <div class="footer-column">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#contacts">Emergency Contacts</a></li>
+          <li><a href="https://www.google.com/maps/search/lawyers+near+me/" target="_blank" rel="noopener">Contact a Lawyer</a></li>
+          <li><a href="https://consumerhelpline.gov.in/public/" target="_blank" rel="noopener">Consumer Court</a></li>
+          <li><a href="#">Legal FAQs</a></li>
+          <li><a href="#">Report Crime</a></li>
+        </ul>
+      </div>
+      <div class="footer-column social-column">
+        <h4>Follow Us</h4>
+        <div class="social-icons">
+          <a href="#"><i class='bx bxl-facebook'></i></a>
+          <a href="#"><i class='bx bxl-twitter'></i></a>
+          <a href="#"><i class='bx bxl-instagram'></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>By continuing past this page, you agree to our Terms of Service, Cookie Policy, Privacy Policy and Content Policies.</p>
+      <p><strong>Developers:</strong> Madhav Murali V, Nandan Krishna, Akhil Shaju, Akshay AC</p>
+      <p>© 2025 LawBot AI. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ===== FILE A COMPLAINT MODAL ===== -->
+  <div id="complaintModal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" id="close-complaint" aria-label="Close modal">&times;</button>
+      <h2 id="modal-title">Choose a Portal / State</h2>
+      <ul id="state-list" class="state-list"></ul>
+    </div>
+  </div>
+
+  <!-- Floating Sign Out Button -->
+  <!-- Profile Avatar + Dropdown -->
+<button id="profile-btn"></button>
+<div id="profile-menu">
+  <ul>
+    <li id="signout-option">Sign Out</li>
+  </ul>
+</div>
+
+
+</body>
+</html>
