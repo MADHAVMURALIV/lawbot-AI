@@ -24,6 +24,67 @@
             --font-family: 'Outfit', sans-serif;
         }
 
+        /* new themes added below ---------------start------------------------------------------*/
+
+
+        /* ================= THEME CLASSES ================= */
+
+/* Blue Theme */
+.theme-blue {
+    --dark-bg: #0f172a;
+    --dark-sidebar: #1e293b;
+    --dark-card: #334155;
+    --accent-pink: #3b82f6;
+    --accent-purple: #2563eb;
+    --header-gradient: linear-gradient(90deg, #2563eb, #3b82f6);
+}
+
+/* Green Theme */
+.theme-green {
+    --dark-bg: #0f1f1a;
+    --dark-sidebar: #1b2e28;
+    --dark-card: #27443d;
+    --accent-pink: #10b981;
+    --accent-purple: #059669;
+    --header-gradient: linear-gradient(90deg, #059669, #10b981);
+}
+
+/* Red Theme */
+.theme-red {
+    --dark-bg: #1f0f14;
+    --dark-sidebar: #2e1b21;
+    --dark-card: #442730;
+    --accent-pink: #ef4444;
+    --accent-purple: #dc2626;
+    --header-gradient: linear-gradient(90deg, #dc2626, #ef4444);
+}
+
+/* Orange Theme */
+.theme-orange {
+    --dark-bg: #1f140f;
+    --dark-sidebar: #2e221b;
+    --dark-card: #443327;
+    --accent-pink: #f97316;
+    --accent-purple: #ea580c;
+    --header-gradient: linear-gradient(90deg, #ea580c, #f97316);
+}
+
+/* White Theme */
+.theme-white {
+    --dark-bg: #f4f4f4;
+    --dark-sidebar: #ffffff;
+    --dark-card: #ffffff;
+    --primary-text: #111;
+    --secondary-text: #555;
+    --accent-pink: #8A2BE2;
+    --accent-purple: #FF69B4;
+    --header-gradient: linear-gradient(90deg, #8A2BE2, #FF69B4);
+}
+
+
+/* -------------------------- theme added till here ---------------------------------------------------------------------------------------------------- */
+
+
         * {
             margin: 0;
             padding: 0;
@@ -458,6 +519,131 @@
 .footer-bottom{border-top:1px solid rgba(255,255,255,.1);text-align:center;margin-top:2rem;padding-top:1rem;color:#888}
 
 
+.settings-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.settings-container {
+    width: 800px;
+    height: 500px;
+    background: var(--dark-sidebar);
+    border-radius: 14px;
+    display: flex;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}
+
+.settings-sidebar {
+    width: 220px;
+    background: var(--dark-card);
+    padding: 20px;
+    border-right: 1px solid rgba(255,255,255,0.05);
+}
+
+.settings-sidebar h3 {
+    margin-bottom: 20px;
+}
+
+.settings-item {
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--secondary-text);
+    margin-bottom: 8px;
+}
+
+.settings-item:hover,
+.settings-item.active {
+    background: var(--dark-bg);
+    color: var(--primary-text);
+}
+
+.settings-content {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-content h2 {
+    margin-bottom: 20px;
+}
+
+.settings-content select {
+    padding: 8px;
+    border-radius: 6px;
+    background: var(--dark-card);
+    color: var(--primary-text);
+    border: 1px solid rgba(255,255,255,0.1);
+    margin-top: 8px;
+}
+
+.close-btn {
+    margin-top: auto;
+    padding: 8px 14px;
+    border-radius: 6px;
+    background: var(--header-gradient);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+.theme-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.theme-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 8px;
+    color: var(--secondary-text);
+    transition: background 0.2s;
+}
+
+.theme-option:hover {
+    background: var(--dark-bg);
+    color: var(--primary-text);
+}
+
+.color-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+}
+
+/* Dot Colors */
+.default-dot { background: linear-gradient(90deg,#8A2BE2,#FF69B4); }
+.blue-dot { background: #3b82f6; }
+.green-dot { background: #10b981; }
+.red-dot { background: #ef4444; }
+.orange-dot { background: #f97316; }
+.white-dot { background: #ffffff; border:1px solid #ccc; }
+
+
+
+
+
+.theme-option.selected {
+    background: var(--dark-bg);
+    color: var(--primary-text);
+}
+
+.settings-tab { display: none; }
+.settings-tab.active { display: block; }
     </style>
 </head>
 <body>
@@ -471,7 +657,7 @@
             <!-- <span>Narbara</span> -->
             <a href = "https://www.youtube.com/watch?v=iG7_h8K-1Wg">Live news</a>
             <a href="https://www.youtube.com/@SupremeCourtofIndia-1950">Supreme Court </a>
-            <a href="#">Profile Settings</a>
+            <a href="#" id = "settings-btn">Settings</a>
             <a href="signin.html" class="btn-header">Log Out</a>
         </div>
     </header>
@@ -701,6 +887,7 @@ document.querySelector(".dropdown-toggle").addEventListener("click", function ()
 
     
 
+
 <!--extras ,copyright below ''-->
 
 <div class="footer-column social-column">
@@ -718,7 +905,174 @@ document.querySelector(".dropdown-toggle").addEventListener("click", function ()
       <p>© 2025 LawBot AI. All rights reserved.</p>
     </div>
 
+<!-- settings options unlocked ---- starts from below ------->
 
+<!-- SETTINGS MODAL -->
+
+
+
+<!-- SETTINGS MODAL -->
+<div id="settings-modal" class="settings-overlay">
+
+  <div class="settings-container">
+
+    <!-- LEFT NAVIGATION -->
+    <div class="settings-sidebar">
+        <h3>Settings</h3>
+        <div class="settings-item active" data-tab="general">General</div>
+        <div class="settings-item" data-tab="appearance">Appearance</div>
+        <div class="settings-item" data-tab="notifications">Notifications</div>
+        <div class="settings-item" data-tab="security">Security</div>
+    </div>
+
+    <!-- RIGHT CONTENT -->
+    <div class="settings-content">
+
+        <!-- GENERAL -->
+        <div class="settings-tab active" id="general">
+            <h2>General</h2>
+            <p><strong>Whatsapp us at 📞 : </strong> +91 9447968793</p>
+            <p><strong>or Dial us at  ☎️ : </strong> +91 8547925171</p>
+            <p><strong>Email us at 📩</strong> tracksiumtechnologies@gmail.com</p>
+        </div>
+
+        <!-- APPEARANCE -->
+        <div class="settings-tab" id="appearance">
+            <h2>Appearance</h2>
+
+            <div class="theme-options">
+
+                <div class="theme-option" data-theme="">
+                    <span class="color-dot default-dot"></span>
+                    Default
+                </div>
+
+                <div class="theme-option" data-theme="theme-blue">
+                    <span class="color-dot blue-dot"></span>
+                    Blue
+                </div>
+
+                <div class="theme-option" data-theme="theme-green">
+                    <span class="color-dot green-dot"></span>
+                    Green
+                </div>
+
+                <div class="theme-option" data-theme="theme-red">
+                    <span class="color-dot red-dot"></span>
+                    Red
+                </div>
+
+                <div class="theme-option" data-theme="theme-orange">
+                    <span class="color-dot orange-dot"></span>
+                    Orange
+                </div>
+
+                <div class="theme-option" data-theme="theme-white">
+                    <span class="color-dot white-dot"></span>
+                    White
+                </div>
+
+            </div>
+        </div>
+
+        <!-- NOTIFICATIONS -->
+        <div class="settings-tab" id="notifications">
+            <h2>Notifications</h2>
+            <p>Notification preferences coming soon.</p>
+        </div>
+
+        <!-- SECURITY -->
+        <div class="settings-tab" id="security">
+            <h2>Security</h2>
+            <p>Security settings coming soon.</p>
+        </div>
+
+        <button id="close-settings" class="close-btn">Close</button>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ends here ----------------------js script attached below --------------------------------->
+
+
+
+<script>
+
+/* =========================
+   SETTINGS OPEN / CLOSE
+========================= */
+
+const settingsBtn = document.getElementById("settings-btn");
+const settingsModal = document.getElementById("settings-modal");
+const closeSettingsBtn = document.getElementById("close-settings");
+
+settingsBtn.addEventListener("click", function(e){
+    e.preventDefault();
+    settingsModal.style.display = "flex";
+});
+
+closeSettingsBtn.addEventListener("click", function(){
+    settingsModal.style.display = "none";
+});
+
+/* =========================
+   TAB SWITCHING
+========================= */
+
+const tabButtons = document.querySelectorAll(".settings-item");
+const tabs = document.querySelectorAll(".settings-tab");
+
+tabButtons.forEach(button => {
+    button.addEventListener("click", function(){
+        const target = this.getAttribute("data-tab");
+
+        tabButtons.forEach(btn => btn.classList.remove("active"));
+        tabs.forEach(tab => tab.classList.remove("active"));
+
+        this.classList.add("active");
+        document.getElementById(target).classList.add("active");
+    });
+});
+
+/* =========================
+   THEME SWITCHER
+========================= */
+
+const themeOptions = document.querySelectorAll(".theme-option");
+
+themeOptions.forEach(option => {
+    option.addEventListener("click", function(){
+        const theme = this.getAttribute("data-theme");
+
+        document.body.className = theme;
+        localStorage.setItem("lawbot-theme", theme);
+
+        themeOptions.forEach(opt => opt.classList.remove("selected"));
+        this.classList.add("selected");
+    });
+});
+
+/* =========================
+   LOAD SAVED THEME
+========================= */
+
+window.addEventListener("load", function(){
+    const savedTheme = localStorage.getItem("lawbot-theme");
+    if(savedTheme){
+        document.body.className = savedTheme;
+
+        themeOptions.forEach(option => {
+            if(option.getAttribute("data-theme") === savedTheme){
+                option.classList.add("selected");
+            }
+        });
+    }
+});
+
+</script>
     
 </body>
 </html>
