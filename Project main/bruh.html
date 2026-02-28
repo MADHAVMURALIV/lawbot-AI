@@ -683,6 +683,86 @@
 }
 
 
+/* ===== Complaint Modal ===== */
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+
+.modal-content {
+  width: 420px;
+  max-height: 500px;
+  background: var(--dark-sidebar);
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 0 25px rgba(138, 43, 226, 0.6);
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+.modal-content h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: var(--accent-pink);
+}
+
+.state-list {
+  list-style: none;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.state-list li {
+  margin-bottom: 10px;
+}
+
+.state-list a {
+  display: block;
+  padding: 10px;
+  border-radius: 10px;
+  background: var(--dark-card);
+  color: var(--primary-text);
+  text-decoration: none;
+  transition: 0.2s;
+  text-align: center;
+}
+
+.state-list a:hover {
+  background: var(--header-gradient);
+  color: white;
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 18px;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: var(--secondary-text);
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: var(--primary-text);
+}
+
+@keyframes fadeIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+
+
+
     </style>
 </head>
 <body>
@@ -794,7 +874,7 @@
 
             <h2>Feature Card</h2>
             <section class="feature-grid">
-                <a class="feature-card" href="#" id="emergency-contacts-card">
+                <a class="feature-card" href="#" id="file-complaint">
                     <div class="card-header">
                         <i class='bx bx-comment-error card-icon-i'></i>
 
@@ -1197,5 +1277,8 @@ document.getElementById("emergency-btn").addEventListener("click", function(){
 
 </script>
     
+
+<script src="script.js"></script>
+
 </body>
 </html>
