@@ -297,6 +297,7 @@
             transition: transform 0.2s, box-shadow 0.2s;
             cursor: pointer;
             position: relative;
+            text-decoration: none;
         }
 
         .feature-card:hover {
@@ -644,6 +645,44 @@
 
 .settings-tab { display: none; }
 .settings-tab.active { display: block; }
+
+
+.contact-input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.contact-input label {
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+    color: var(--secondary-text);
+}
+
+.contact-input input {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--dark-card);
+    color: var(--primary-text);
+}
+
+.contact-input input:focus {
+    outline: none;
+    border: 1px solid var(--accent-pink);
+}
+
+.save-btn {
+    margin-top: 10px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    background: var(--header-gradient);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+
     </style>
 </head>
 <body>
@@ -738,10 +777,10 @@
 
     <div class="sidebar-section">
         <h3>Stats</h3>
-        <div class="sidebar-item">
-            <i class='bx bx-error-alt'></i> Alerts Pending
-            <span class="sidebar-badge">05</span>
-        </div>
+            <div class="sidebar-item" id="emergency-btn" style="cursor:pointer;">
+                <i class='bx bx-error-alt'></i> Emergency Alert 
+                <span class="sidebar-badge">🆘</span>
+            </div>
     </div>
 </aside>
 
@@ -749,8 +788,8 @@
 
             <div class="highlight-card">
                 <h2>Find Your Legal Community</h2>
-                <p>Discuss cases, share knowledge, and connect with peers and professionals in a safe, curated legal environment.</p>
-                <a href="#" class="btn-light">Learn More</a>
+                <p>Discuss cases, share knowledge, and connect with law and order in a safe, curated legal environment.</p>
+                <a href="chat.html" class="btn-light">Try lawbot</a>
                 </div>
 
             <h2>Feature Card</h2>
@@ -760,7 +799,7 @@
                         <i class='bx bx-comment-error card-icon-i'></i>
 
                         <h3>Register Complaint</h3>
-                        <span>20:36</span>
+                        <span></span>
                     </div>
                     <p>Quick access to Police, Fire, and Legal aid numbers.</p>
                     <p style="font-size: 0.8rem; color: var(--accent-pink);">Instant help available</p>
@@ -770,7 +809,7 @@
                     <div class="card-header">
                         <i class='bx bx-question-mark card-icon-b'></i>
                         <h3>Legal FAQs</h3>
-                        <span>20:36</span>
+                        <span></span>
                     </div>
                     <p>Browse answers to common legal questions & scenarios.</p>
                     <p style="font-size: 0.8rem; color: var(--secondary-text);">Explore expert-written articles.</p>
@@ -780,7 +819,7 @@
                     <div class="card-header">
                         <i class='bx bx-map card-icon-i'></i>
                         <h3>Live Location</h3>
-                        <span>20:36</span>
+                        <span></span>
                     </div>
                     <p>Securely view and share your current precise location.</p>
                     <p style="font-size: 0.8rem; color: var(--secondary-text);">Check nearest police stations.</p>
@@ -793,7 +832,7 @@
                     <div class="card-header">
                         <i class='bx bx-support card-icon-b'></i>
                         <h3>Consumer Helpline</h3>
-                        <span>20:36</span>
+                        <span></span>
                     </div>
                     <p>Submit and track consumer complaints quickly.</p>
                     <p style="font-size: 0.8rem; color: var(--secondary-text);">High volume portal activity.</p>
@@ -803,7 +842,7 @@
                     <div class="card-header">
                         <i class='bx bx-file card-icon-i'></i>
                         <h3>Legal Articles</h3>
-                        <span>20:36</span>
+                        <span></span>
                     </div>
                     <p>Deep dives into current legal topics and precedents.</p>
                     <p style="font-size: 0.8rem; color: var(--secondary-text);">Recently updated content.</p>
@@ -813,7 +852,7 @@
                     <div class="card-header">
                         <i class='bx bx-book card-icon-b'></i>
                         <h3>Law Awareness</h3>
-                        <span>20:36</span>
+                        <span></span>
                     </div>
                     <p>Know your legal rights and duties from official sources.</p>
                     <p style="font-size: 0.8rem; color: var(--secondary-text);">Essential reading for all users.</p>
@@ -921,6 +960,7 @@ document.querySelector(".dropdown-toggle").addEventListener("click", function ()
         <h3>Settings</h3>
         <div class="settings-item active" data-tab="general">General</div>
         <div class="settings-item" data-tab="appearance">Appearance</div>
+        <div class="settings-item" data-tab="emergency">Emergency</div>
         <div class="settings-item" data-tab="notifications">Notifications</div>
         <div class="settings-item" data-tab="security">Security</div>
     </div>
@@ -974,6 +1014,36 @@ document.querySelector(".dropdown-toggle").addEventListener("click", function ()
 
             </div>
         </div>
+
+        <!-- EMERGENCY CONTACTS -->
+<div class="settings-tab" id="emergency">
+    <h2>Emergency Contacts</h2>
+
+    <p style="margin-bottom:15px; color:var(--secondary-text);">
+        Add up to 3 trusted contacts. They will receive SMS alerts when you trigger an emergency.
+    </p>
+
+    <form id="emergency-form">
+
+        <div class="contact-input">
+            <label>Contact 1</label>
+            <input type="tel" name="contact1" placeholder="+91XXXXXXXXXX">
+        </div>
+
+        <div class="contact-input">
+            <label>Contact 2</label>
+            <input type="tel" name="contact2" placeholder="+91XXXXXXXXXX">
+        </div>
+
+        <div class="contact-input">
+            <label>Contact 3</label>
+            <input type="tel" name="contact3" placeholder="+91XXXXXXXXXX">
+        </div>
+
+        <button type="submit" class="save-btn">Save Contacts</button>
+
+    </form>
+</div>
 
         <!-- NOTIFICATIONS -->
         <div class="settings-tab" id="notifications">
@@ -1071,6 +1141,59 @@ window.addEventListener("load", function(){
         });
     }
 });
+
+
+
+
+
+document.getElementById("emergency-form").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const contacts = [];
+
+    formData.forEach(value => {
+        if(value.trim() !== ""){
+            contacts.push(value.trim());
+        }
+    });
+
+    if(contacts.length === 0){
+        alert("Please enter at least one contact number.");
+        return;
+    }
+
+    console.log("Contacts to save:", contacts);
+
+    alert("Contacts saved successfully (frontend demo).");
+
+    // Later: send this to backend using fetch()
+});
+
+document.getElementById("emergency-btn").addEventListener("click", function(){
+
+    if(!confirm("Send emergency alert to your 3 registered contacts?")){
+        return;
+    }
+
+    fetch("/send-alert", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+    })
+    .catch(err => {
+        alert("Emergency alert failed.");
+    });
+
+});
+
+
+
 
 </script>
     
