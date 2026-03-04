@@ -49,8 +49,7 @@
         const result = await res.json();
 
         if (res.ok) {
-          alert("✅ Login successful!");
-          window.location.href = "bruh.html";  // redirect after login
+          window.location.replace("bruh.html");  // redirect after login
         } else {
           alert("❌ " + (result.error || "Login failed"));
         }
