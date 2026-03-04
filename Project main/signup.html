@@ -17,10 +17,21 @@
       <input type="password" id="password" placeholder="New Password" required />
       <input type="password" id="confirm_password" placeholder="Confirm Password" required />
 
+      <!-- Password error message -->
+      <p id="password-message" style="font-size:14px;margin:6px 0;"></p>
+
       <!-- OTP Section -->
       <div class="otp-section">
         <button type="button" id="send-otp">Send OTP</button>
+
+        <!-- OTP message will appear here -->
+        <p id="otp-message" style="font-size:14px;margin:6px 0;"></p>
+
         <input type="text" id="otp" placeholder="Enter OTP" />
+
+        <!-- Verify OTP message -->
+        <p id="verify-message" style="font-size:14px;margin:6px 0;"></p>
+
         <button type="button" id="verify-otp">Verify OTP</button>
       </div>
 
@@ -48,21 +59,38 @@
         });
 
         const result = await res.json();
-        alert(result.message || result.error);
+        const msg = document.getElementById("otp-message");
+
+        if (res.ok) {
+          msg.innerText = "OTP sent successfully";
+          msg.style.color = "#00ff9d";
+        } else {
+          msg.innerText = result.error || "Failed to send OTP";
+          msg.style.color = "red";
+        }
       } catch (err) {
-        alert("⚠️ Could not connect to server. Make sure app.py is running.");
+        const msg = document.getElementById("otp-message");
+        msg.innerText = "⚠️ Could not connect to server";
+        msg.style.color = "red";
       }
     });
 
     // Handle Verify OTP
     document.getElementById("verify-otp").addEventListener("click", async () => {
+        // remove OTP sent message
+      document.getElementById("otp-message").innerText = "";
       const email = document.getElementById("email").value;
       const otp = document.getElementById("otp").value;
 
+      const msg = document.getElementById("verify-message");
+
       if (!otp) {
-        alert("Enter the OTP");
+        msg.innerText = "Enter the OTP";
+        msg.style.color = "red";
         return;
       }
+
+      msg.innerText = "";
 
       try {
         const res = await fetch("http://127.0.0.1:5000/verify-otp", {
@@ -72,15 +100,21 @@
         });
 
         const result = await res.json();
+        const msg = document.getElementById("verify-message");
+
         if (res.ok) {
           otpVerified = true;
-          alert("✅ OTP verified!");
+          msg.innerText = " OTP verified";
+          msg.style.color = "#00ff9d";
           document.getElementById("signup-btn").disabled = false;
         } else {
-          alert("❌ " + (result.error || "Invalid OTP"));
+          msg.innerText = result.error || "Invalid OTP";
+          msg.style.color = "red";
         }
       } catch (err) {
-        alert("⚠️ Could not connect to server. Make sure app.py is running.");
+        const msg = document.getElementById("verify-message");
+        msg.innerText = "⚠️ Could not connect to server";
+        msg.style.color = "red";
       }
     });
 
@@ -96,9 +130,14 @@
       const password = document.getElementById("password").value;
       const confirmPassword = document.getElementById("confirm_password").value;
 
+      const passMsg = document.getElementById("password-message");
+
       if (password !== confirmPassword) {
-        alert("❌ Passwords do not match");
+        passMsg.innerText = "Passwords do not match";
+        passMsg.style.color = "red";
         return;
+      } else {
+        passMsg.innerText = "";
       }
 
       const data = {
