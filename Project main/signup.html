@@ -24,7 +24,7 @@
         <button type="button" id="verify-otp">Verify OTP</button>
       </div>
 
-      <button type="submit" id="signup-btn" disabled>Sign Up</button>
+      <button type="submit" id="signup-btn" disabled >Sign Up</button>
     </form>
     <p class="switch">Already have an account? <a href="signin.html">Sign In</a></p>
   </div>
@@ -93,6 +93,14 @@
         return;
       }
 
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirm_password").value;
+
+      if (password !== confirmPassword) {
+        alert("❌ Passwords do not match");
+        return;
+      }
+
       const data = {
         first_name: document.getElementById("first_name").value,
         last_name: document.getElementById("last_name").value,
@@ -109,11 +117,12 @@
         });
 
         const result = await res.json();
-        alert(result.message || result.error);
-
-        if(result.message){
-          window.location.href = "signin.html";
+        if (res.ok) {
+          window.location.replace("signin.html");
+        } else {
+          alert("❌ " + (result.error || "Registration failed"));
         }
+
       } catch (err) {
         alert("⚠️ Could not connect to server. Make sure app.py is running.");
       }
