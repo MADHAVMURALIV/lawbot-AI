@@ -1,3 +1,16 @@
+# ===== LOAD ENV CONFIG BEFORE APP STARTS =====
+import os
+from dotenv import load_dotenv
+
+env_file = ".env.example"
+
+if os.path.exists(env_file):
+    load_dotenv(env_file)
+    print("Environment configuration loaded from .env.example")
+else:
+    print("Warning: .env.example file not found")
+
+
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import sqlite3
@@ -248,3 +261,4 @@ def chat():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
+
