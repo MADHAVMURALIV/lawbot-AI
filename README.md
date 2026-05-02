@@ -45,7 +45,7 @@ Open index.html in any browser (Chrome, Brave, Edge, OperaGX, etc.)
 
 UI and OUTPUTS 
 <img width="1919" height="1030" alt="Screenshot 2026-05-02 221749" src="https://github.com/user-attachments/assets/8c6d4fe0-2fcd-46b3-ab67-1a3b461fe047" />
-<img width="1895" height="1021" alt="Screenshot 2026-05-02 221955" src="https://github.com/user-attachments/assets/e9f60c71-536b-4735-9bfb-b17a4552d5a2" />
+
   <img width="1919" height="1031" alt="Screenshot 2026-05-02 221816" src="https://github.com/user-attachments/assets/6ca240a3-5024-4db4-9e10-988f21418fa1" />
 <img width="1918" height="1029" alt="Screenshot 2026-05-02 221856" src="https://github.com/user-attachments/assets/176b7ff4-88de-43bb-af44-8e562e80e8e3" />
 <img width="1919" height="1028" alt="Screenshot 2026-05-02 221909" src="https://github.com/user-attachments/assets/ebcb61d4-bcda-453c-9490-0d0ce79dc20c" />
