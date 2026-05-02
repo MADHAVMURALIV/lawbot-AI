@@ -10,6 +10,7 @@ Ask legal questions in natural language
 AI-generated legal responses
 Simple and user-friendly interface
 Fast response system
+
 ```
 Tech Stack
 ```
@@ -39,11 +40,14 @@ Run Backend
 python app.py
 Run Frontend
 
+```
 Open index.html in any browser (Chrome, Brave, Edge, OperaGX, etc.)
+```
 
-
+```
 
 UI and OUTPUTS 
+```
 <img width="1919" height="1030" alt="Screenshot 2026-05-02 221749" src="https://github.com/user-attachments/assets/8c6d4fe0-2fcd-46b3-ab67-1a3b461fe047" />
 
   <img width="1919" height="1031" alt="Screenshot 2026-05-02 221816" src="https://github.com/user-attachments/assets/6ca240a3-5024-4db4-9e10-988f21418fa1" />
