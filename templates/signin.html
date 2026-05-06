@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LawBot AI - Login</title>
+
+  <!-- ✅ FIXED CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+</head>
+
+<body>
+  <div class="auth-container">
+    <h1>LawBot AI</h1>
+    <p>Your Legal Assistant & Emergency Companion</p>
+    
+    <form id="login-form">
+      <input type="email" placeholder="Email" required />
+      <input type="password" placeholder="Password" required />
+
+      <p id="login-error" style="
+        color:#ff6b6b;
+        font-size:0.9rem;
+        margin-top:-8px;
+        margin-bottom:10px;
+        display:none;
+      ">
+      </p>
+
+      <div class="options">
+        <label>
+          <input type="checkbox"> Remember me
+        </label>
+        <a href="#">Forgot Password?</a>
+      </div>
+
+      <button type="submit">Login</button>
+    </form>
+    
+    <!-- ✅ FIXED ROUTE -->
+    <p class="switch">Don’t have an account? <a href="/signup_page">Register</a></p>
+  </div>
+
+  <script>
+    document.getElementById("login-form").addEventListener("submit", async function(e){
+      e.preventDefault();
+
+      const errorBox = document.getElementById("login-error");
+      errorBox.style.display = "none";
+
+      const data = {
+        email: e.target[0].value,
+        password: e.target[1].value
+      };
+
+      try {
+        const res = await fetch("/login", {   // ✅ FIXED URL
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+
+        if (res.ok) {
+          window.location.replace("/bruh");
+        } else {
+          errorBox.textContent = (result.error || "Invalid email or password");
+          errorBox.style.display = "block";
+        }
+
+      } catch (err) {
+        errorBox.textContent = "⚠️ Could not connect to server.";
+        errorBox.style.display = "block";
+      }
+    });
+  </script>
+
+</body>
+</html>

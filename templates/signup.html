@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LawBot AI - Sign Up</title>
+
+  <!-- ✅ FIXED CSS PATH -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+</head>
+
+<body>
+  <div class="auth-container">
+    <h1>Create Account</h1>
+    <form id="signup-form">
+      <input type="text" id="first_name" placeholder="First Name" required autocomplete="First-name"/>
+      <input type="text" id="last_name" placeholder="Last Name" required autocomplete="Last-name"/>
+      <input type="email" id="email" placeholder="Email Address" required autocomplete="off" />
+      <input type="tel" id="phone" placeholder="Phone Number" pattern="[0-9]{10}" required autocomplete="phone"/>
+      <input type="password" id="password" placeholder="New Password" required autocomplete="new-password" />
+      <input type="password" id="confirm_password" placeholder="Confirm Password" required autocomplete="new-password"/>
+
+      <!-- Password error message -->
+      <p id="password-message" style="font-size:14px;margin:6px 0;"></p>
+
+      <!-- OTP Section -->
+      <div class="otp-section">
+        <button type="button" id="send-otp">Send OTP</button>
+
+        <p id="otp-message" style="font-size:14px;margin:6px 0;"></p>
+
+        <input type="text" id="otp" placeholder="Enter OTP" />
+
+        <p id="verify-message" style="font-size:14px;margin:6px 0;"></p>
+
+        <button type="button" id="verify-otp">Verify OTP</button>
+      </div>
+
+      <button type="submit" id="signup-btn" disabled>Sign Up</button>
+    </form>
+
+    <!-- ✅ FIXED ROUTE -->
+    <p class="switch">Already have an account? <a href="/signin">Sign In</a></p>
+  </div>
+
+  <script>
+    let otpVerified = false;
+
+    // Handle Send OTP
+    document.getElementById("send-otp").addEventListener("click", async () => {
+      const email = document.getElementById("email").value;
+      if (!email) {
+        alert("Please enter email first.");
+        return;
+      }
+
+      try {
+        const res = await fetch("/send-otp", {   // ✅ FIXED URL
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email })
+        });
+
+        const result = await res.json();
+        const msg = document.getElementById("otp-message");
+
+        if (res.ok) {
+          msg.innerText = "OTP sent successfully";
+          msg.style.color = "#00ff9d";
+        } else {
+          msg.innerText = result.error || "Failed to send OTP";
+          msg.style.color = "red";
+        }
+      } catch (err) {
+        const msg = document.getElementById("otp-message");
+        msg.innerText = "⚠️ Could not connect to server";
+        msg.style.color = "red";
+      }
+    });
+
+    // Handle Verify OTP
+    document.getElementById("verify-otp").addEventListener("click", async () => {
+      document.getElementById("otp-message").innerText = "";
+
+      const email = document.getElementById("email").value;
+      const otp = document.getElementById("otp").value;
+
+      const msg = document.getElementById("verify-message");
+
+      if (!otp) {
+        msg.innerText = "Enter the OTP";
+        msg.style.color = "red";
+        return;
+      }
+
+      msg.innerText = "";
+
+      try {
+        const res = await fetch("/verify-otp", {   // ✅ FIXED URL
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, otp })
+        });
+
+        const result = await res.json();
+
+        if (res.ok) {
+          otpVerified = true;
+          msg.innerText = "OTP verified";
+          msg.style.color = "#00ff9d";
+          document.getElementById("signup-btn").disabled = false;
+        } else {
+          msg.innerText = result.error || "Invalid OTP";
+          msg.style.color = "red";
+        }
+      } catch (err) {
+        const msg = document.getElementById("verify-message");
+        msg.innerText = "⚠️ Could not connect to server";
+        msg.style.color = "red";
+      }
+    });
+
+    // Handle Signup
+    document.getElementById("signup-form").addEventListener("submit", async function(e){
+      e.preventDefault();
+
+      if (!otpVerified) {
+        alert("❌ Please verify OTP before signing up.");
+        return;
+      }
+
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirm_password").value;
+
+      const passMsg = document.getElementById("password-message");
+
+      if (password !== confirmPassword) {
+        passMsg.innerText = "Passwords do not match";
+        passMsg.style.color = "red";
+        return;
+      } else {
+        passMsg.innerText = "";
+      }
+
+      const data = {
+        first_name: document.getElementById("first_name").value,
+        last_name: document.getElementById("last_name").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        password: document.getElementById("password").value
+      };
+
+      try {
+        const res = await fetch("/signup", {   // ✅ FIXED URL
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+          window.location.href = "/signin";   // ✅ FIXED REDIRECT
+        } else {
+          alert("❌ " + (result.error || "Registration failed"));
+        }
+
+      } catch (err) {
+        alert("⚠️ Could not connect to server. Make sure app.py is running.");
+      }
+    });
+  </script>
+</body>
+</html>
